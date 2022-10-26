@@ -120,8 +120,12 @@ public class MineField {
 
       for (int horizontalMove : directions) {
          for (int verticalMove : directions) {
+            if (horizontalMove == 0 && verticalMove == 0) {
+               continue;
+            }
             int newRow = row + horizontalMove;
             int newCol = col + verticalMove;
+
             if (inRange(newRow, newCol) && mines[newRow][newCol]) {
                count++;
             }

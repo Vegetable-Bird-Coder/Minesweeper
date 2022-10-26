@@ -193,9 +193,6 @@ public class VisibleField {
    public boolean isUncovered(int row, int col) {
       return 0 <= status[row][col];
    }
-   
- 
-   // <put private methods here>
 
    /**
       If the square isn't a mine/guessed/uncovered, uncover it.
