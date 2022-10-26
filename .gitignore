@@ -2,3 +2,4 @@
 Minesweeper.iml
 .idea
 out
+src/MineFieldTester.java

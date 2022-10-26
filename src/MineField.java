@@ -16,7 +16,11 @@ import java.util.Random;
  */
 public class MineField {
 
-   // <put instance variables here>
+   /**
+    Presentation Invariant
+    -- after construct, numRows = mines.length, numCols = mines[0].length
+    -- numMines >= 0
+    */
    private final boolean[][] mines;
    private int numMines;
    private final int numRows;

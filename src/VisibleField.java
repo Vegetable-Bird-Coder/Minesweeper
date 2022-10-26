@@ -39,8 +39,7 @@ public class VisibleField {
    public static final int INCORRECT_GUESS = 10;  // is displayed a specific way at the end of losing game
    public static final int EXPLODED_MINE = 11;   // the one you uncovered by mistake (that caused you to lose)
    // ----------------------------------------------------------   
-  
-   // <put instance variables here>
+
    private final MineField mineField;
    private final int[][] status;
    private int numMinesLeft;
@@ -158,16 +157,7 @@ public class VisibleField {
       }
 
       if (mineField.hasMine(row, col)) {
-         for (int i = 0; i < mineField.numRows(); i++) {
-            for (int j = 0; j < mineField.numCols(); j++) {
-               if (mineField.hasMine(i, j) && status[i][j] != MINE_GUESS) {
-                  status[i][j] = MINE;
-               }
-               if (!mineField.hasMine(i, j) && status[i][j] == MINE_GUESS) {
-                  status[i][j] = INCORRECT_GUESS;
-               }
-            }
-         }
+         changeToLostStatus();
          status[row][col] = EXPLODED_MINE;
          isGameOver = true;
          return false;
@@ -175,6 +165,7 @@ public class VisibleField {
          uncoverArea(row, col);
          if (numCorrectUncover == mineField.numRows() * mineField.numCols() - mineField.numMines()) {
             isGameOver = true;
+            changeToWinStatus();
          }
          return true;
       }
@@ -242,4 +233,35 @@ public class VisibleField {
          }
       }
    }
+
+   /**
+    When user uncover a square and win the game, show all mines in yellow.
+    */
+   private void changeToWinStatus() {
+      for (int i = 0; i < mineField.numRows(); i++) {
+         for (int j = 0; j < mineField.numCols(); j++) {
+            if (mineField.hasMine(i, j) && status[i][j] != MINE_GUESS) {
+               status[i][j] = MINE_GUESS;
+            }
+         }
+      }
+   }
+
+   /**
+    When user uncover a mine, change the status to lost.
+    */
+   private void changeToLostStatus() {
+      for (int i = 0; i < mineField.numRows(); i++) {
+         for (int j = 0; j < mineField.numCols(); j++) {
+            if (mineField.hasMine(i, j) && status[i][j] != MINE_GUESS) {
+               status[i][j] = MINE;
+            }
+            if (!mineField.hasMine(i, j) && status[i][j] == MINE_GUESS) {
+               status[i][j] = INCORRECT_GUESS;
+            }
+         }
+      }
+   }
 }
+
+
